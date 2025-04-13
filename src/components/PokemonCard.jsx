@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     height: 150,
-    width: 180,
+    width: 190,
   },
   spacing: {
     flex: 1,
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 10,
     top: 10,
-    color: "#000",
+    color: "#fff",
     fontSize: 12,
     fontWeight: "bold",
   },
@@ -58,6 +58,8 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontSize: 16,
     fontWeight: "bold",
+    paddingLeft: 10,
+    color: "#fff",
   },
   imgStyle: {
     position: "absolute",

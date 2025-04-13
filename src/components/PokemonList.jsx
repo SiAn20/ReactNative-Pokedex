@@ -4,7 +4,9 @@ import PokemonCard from "./PokemonCard";
 
 export default function PokemonList({ pokemons, loadPokemons, isNext }) {
   const loadMore = () => {
-    loadPokemons();
+    if (isNext) {
+      loadPokemons();
+    }
   };
 
   return (
@@ -15,20 +17,21 @@ export default function PokemonList({ pokemons, loadPokemons, isNext }) {
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => <PokemonCard pokemon={item} />}
       contentContainerStyle={styles.flatListContentContainer}
-      onEndReached={isNext && loadMore}
+      onEndReached={loadMore}  // Solo lo ejecuta si hay más datos
       onEndReachedThreshold={0.5}
       ListFooterComponent={
-        isNext && (
+        isNext ? (
           <ActivityIndicator
             size="large"
             style={{ marginTop: 20, marginBottom: 40 }}
             color="#AEAEAE"
           />
-        )
+        ) : null // No muestra el indicador si no hay más datos
       }
     />
   );
 }
+
 const styles = StyleSheet.create({
   flatListContentContainer: {
     paddingHorizontal: 20,

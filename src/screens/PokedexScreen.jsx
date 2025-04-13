@@ -11,7 +11,7 @@ export default function PokedexScreen() {
 
   useEffect(() => {
     (async () => {
-      await loadPokemons();
+      await loadPokemons(true);
     })();
   }, []);
 
@@ -21,6 +21,7 @@ export default function PokedexScreen() {
       setNextUrl(response.next);
 
       const pokemonsArray = [];
+
       for await (const pokemon of response.results) {
         const pokemonDetails = await getPokemonDetailsByUrlAPI(pokemon.url);
         pokemonsArray.push({
@@ -28,12 +29,18 @@ export default function PokedexScreen() {
           name: pokemonDetails.name,
           type: pokemonDetails.types[0].type.name,
           order: pokemonDetails.order,
-          image:
-            pokemonDetails.sprites?.other?.["official-artwork"]
-              ?.front_default ?? null,
+          image: pokemonDetails.sprites.other["official-artwork"].front_default,
         });
       }
-      setPokemons([...pokemons, ...pokemonsArray]);
+
+      setPokemons((prev) => {
+        const allPokemons = [...prev, ...pokemonsArray];
+        // eliminar duplicados por id
+        const uniquePokemons = Array.from(
+          new Map(allPokemons.map((p) => [p.id, p])).values()
+        );
+        return uniquePokemons;
+      });
     } catch (error) {
       console.error("Error loading pokemons:", error);
     }
