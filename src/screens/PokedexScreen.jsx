@@ -2,18 +2,36 @@ import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import Constants from "expo-constants";
 import { getPokemonsAPI } from "../api/pokemon";
+import { getPokemonDetailsByUrlAPI } from "../api/pokemon";
+import PokemonList from "../components/PokemonList";
 
 export default function PokedexScreen() {
+  const [pokemons, setPokemons] = useState([]);
+
   useEffect(() => {
     (async () => {
-      loadPokemmons();
+      loadPokemons();
     })();
   }, []);
 
-  const loadPokemmons = async () => {
+  const loadPokemons = async () => {
     try {
       const response = await getPokemonsAPI();
-      console.log("Pokemons loaded:", response);
+
+      const pokemonsArray = [];
+      for await (const pokemon of response.results) {
+        const pokemonDetails = await getPokemonDetailsByUrlAPI(pokemon.url);
+        pokemonsArray.push({
+          id: pokemonDetails.id,
+          name: pokemonDetails.name,
+          type: pokemonDetails.types[0].type.name,
+          order: pokemonDetails.order,
+          imagen:
+            pokemonDetails.sprites?.other?.["official-artwork"]
+              ?.front_default ?? null,
+        });
+      }
+      setPokemons([...pokemons, ...pokemonsArray]);
     } catch (error) {
       console.error("Error loading pokemons:", error);
     }
@@ -21,8 +39,7 @@ export default function PokedexScreen() {
 
   return (
     <View style={{ paddingTop: Constants.statusBarHeight }}>
-      <Text>Pokedex</Text>
-      <Text>Pokemon</Text>
+      <PokemonList pokemons={pokemons} />
     </View>
   );
 }

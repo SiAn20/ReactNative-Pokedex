@@ -7,7 +7,7 @@ export default function FavoriteNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Favorite"
+        name="FavoriteScreen"
         component={FavoriteScreen}
         options={{ title: "Favoritos", headerTitleAlign: "center" }}
       />
