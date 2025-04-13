@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
-import Constants from "expo-constants";
+import { View } from "react-native";
 import { getPokemonsAPI } from "../api/pokemon";
 import { getPokemonDetailsByUrlAPI } from "../api/pokemon";
+import Constants from "expo-constants";
 import PokemonList from "../components/PokemonList";
 
 export default function PokedexScreen() {
   const [pokemons, setPokemons] = useState([]);
+  const [nextUrl, setNextUrl] = useState(null);
 
   useEffect(() => {
     (async () => {
-      loadPokemons();
+      await loadPokemons();
     })();
   }, []);
 
   const loadPokemons = async () => {
     try {
-      const response = await getPokemonsAPI();
+      const response = await getPokemonsAPI(nextUrl);
+      setNextUrl(response.next);
 
       const pokemonsArray = [];
       for await (const pokemon of response.results) {
@@ -38,8 +40,12 @@ export default function PokedexScreen() {
   };
 
   return (
-    <View style={{ paddingTop: Constants.statusBarHeight }}>
-      <PokemonList pokemons={pokemons} />
+    <View style={{ paddingTop: Constants.statusBarHeight, marginTop: 10 }}>
+      <PokemonList
+        pokemons={pokemons}
+        loadPokemons={loadPokemons}
+        isNext={nextUrl}
+      />
     </View>
   );
 }

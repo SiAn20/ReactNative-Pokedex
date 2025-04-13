@@ -1,10 +1,11 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-export default function Pokemon() {
+export default function PokemonScreen() {
   return (
     <View>
       <Text>Pokemon miau miau</Text>
     </View>
   );
 }
+ 

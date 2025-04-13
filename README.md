@@ -39,8 +39,12 @@ npm start
 ## Extras de la app
 
 Para la navegación: [React Navigation](https://reactnavigation.org/docs/getting-started)
+
 para los iconos se uso lo siguiente: [ComunityIcon](https://materialdesignicons.com/)
+
 La API usada: [PokeAPI](https://pokeapi.co/)
+
+Para las palabras inicien en mayuscula: `npm install lodash`
 
 - Sidney Angelly Sahonero Garrado (SiAn20)
 - ReactNative-Pokedex

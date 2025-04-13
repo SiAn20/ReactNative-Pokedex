@@ -1,19 +1,27 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View, Image } from "react-native";
+import getColorByType from "../utils/getColorByType";
+import { capitalize } from "lodash";
+import { useNavigation } from "@react-navigation/native";
 
-export default function PockemonCard({ pokemon }) {
+export default function PokemonCard({ pokemon }) {
+  const navigation = useNavigation();
   const pressableCard = () => {
-    console.log("Card pressed!");
+    navigation.navigate("PokemonScreen", { id: pokemon.id });
   };
+
+  const pokemonColor = getColorByType(pokemon.type);
+  const bgStyles = { backgroundColor: pokemonColor, ...styles.bgStyle };
+
   return (
     <Pressable onPress={pressableCard}>
       <View style={styles.card}>
         <View style={styles.spacing}>
-          <View style={styles.bgStyle}>
+          <View style={bgStyles}>
             <Text style={styles.numberStyle}>
               #{`${pokemon.order}`.padStart(3, 0)}
             </Text>
-            <Text style={styles.nameStyle}>{pokemon.name}</Text>
+            <Text style={styles.nameStyle}>{capitalize(pokemon.name)}</Text>
             <Image source={{ uri: pokemon.image }} style={styles.imgStyle} />
           </View>
         </View>
@@ -26,20 +34,22 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     height: 150,
-    width: 150,
+    width: 180,
   },
   spacing: {
     flex: 1,
     padding: 5,
   },
   bgStyle: {
-    backgroundColor: "grey",
+    flex: 1,
+    borderRadius: 10,
+    padding: 10,
   },
   numberStyle: {
     position: "absolute",
     right: 10,
     top: 10,
-    color: "#fff",
+    color: "#000",
     fontSize: 12,
     fontWeight: "bold",
   },
