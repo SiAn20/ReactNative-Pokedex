@@ -46,5 +46,9 @@ La API usada: [PokeAPI](https://pokeapi.co/)
 
 Para las palabras inicien en mayuscula: `npm install lodash`
 
+Para validar formularios `npm install formik yup`
+
+Para `npm i @react-native-async-storage/async-storage`
+
 - Sidney Angelly Sahonero Garrado (SiAn20)
 - ReactNative-Pokedex

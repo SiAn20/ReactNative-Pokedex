@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Text } from "react-native";
-import Constants from "expo-constants";
+import LoginForm from "../components/auth/LoginForm";
+import UserData from "../components/auth/UserData";
+import useAuth from "../hooks/useAuth";
 
-export default function AccountScreen() {
-  return (
-    <View style={{ paddingTop: Constants.statusBarHeight }}>
-      <Text>Account</Text>
-    </View>
-  );
+export default function Account() {
+  const { auth } = useAuth();
+
+  return <View>{auth ? <UserData /> : <LoginForm />}</View>;
 }

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { View, Pressable } from "react-native";
 import { getPokemonDetailsAPI } from "../api/pokemon";
-import CommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import HeaderPokemon from "../components/pokemon/Header";
 import Type from "../components/pokemon/Type";
 import Stats from "../components/pokemon/Stats";
+import Favorite from "../components/pokemon/Favorite";
+import  useAuth  from "../hooks/useAuth";
 
 export default function PokemonScreen(props) {
   const { navigation, route } = props;
   const { params } = route;
   const [pokemon, setPokemon] = useState(null);
+  const {auth} = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -24,7 +26,7 @@ export default function PokemonScreen(props) {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => null,
+      headerRight: () => (auth ? <Favorite id={pokemon?.id} /> : null),
       headerTintColor: "#fff",
     });
   }, [navigation, params]);
