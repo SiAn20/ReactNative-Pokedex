@@ -50,5 +50,8 @@ Para validar formularios `npm install formik yup`
 
 Para `npm i @react-native-async-storage/async-storage`
 
+Generar APK `expo build:android -t apk`
+Generar app para ios: inscribirse a developer.apple.com (de pago)``
+
 - Sidney Angelly Sahonero Garrado (SiAn20)
 - ReactNative-Pokedex
